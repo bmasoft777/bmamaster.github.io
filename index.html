@@ -85,22 +85,54 @@
       </div>
     </div>
   </section>
-  <!-- НАЧАЛО: форма заявки -->
-  <section id="order">
+  <section>
     <div class="container">
-      <h2>Оформить заявку</h2>
+      <h2>Заявка на ремонт</h2>
+      <div class="card">
+        <form id="requestForm">
+			<p><input name="name" placeholder="Ваше имя" required style="width:100%;padding:10px;" /></p>
+			<p><input name="phone" placeholder="Телефон" required style="width:100%;padding:10px;" /></p>
+			<p><textarea name="message" placeholder="Опишите проблему" required style="width:100%;padding:10px;"></textarea></p>
+			<button type="submit" style="padding:12px 20px;background:var(--accent);border:none;border-radius:999px;font-weight:700;">Отправить</button>
+			<p id="formStatus"></p>
+		</form>
 
-      <form>
-        <input type="text" name="name" placeholder="Ваше имя" required><br><br>
-        <input type="tel" name="phone" placeholder="Телефон" required><br><br>
-        <textarea name="message" placeholder="Опишите проблему"></textarea><br><br>
-        <button type="submit">Отправить заявку</button>
-      </form>
+		<script>
+			const form = document.getElementById('requestForm');
+			const status = document.getElementById('formStatus');
+			form.addEventListener('submit', async (e) => {
+			  e.preventDefault();
+			  status.textContent = 'Отправка...';
 
-      <p>Мастер Михаил свяжется с вами в ближайшее время.</p>
+			  const data = new FormData(form);
+			  const text = `Заявка с сайта%0AИмя: ${data.get('name')}%0AТелефон: ${data.get('phone')}%0AПроблема: ${data.get('message')}`;
+
+			  try {
+				// Telegram (MAX)
+				await fetch(`https://api.telegram.org/bot8512867939:AAEY3FF10uSHeK-NuwQ06p_Murs5Tt6P-3U/sendMessage?chat_id=423546016&text=${text}`);
+
+				// Email через FormSubmit
+				await fetch('https://formsubmit.co/bmaa@yandex.ru', {
+				  method: 'POST',
+				  headers: { 'Content-Type': 'application/json' },
+				  body: JSON.stringify({
+					name: data.get('name'),
+					phone: data.get('phone'),
+					message: data.get('message')
+				  })
+				});
+
+				status.textContent = 'Заявка отправлена!';
+				form.reset();
+			  } catch (err) {
+				status.textContent = 'Ошибка отправки. Позвоните по телефону.';
+			  }
+			});
+		</script>
+
+      </div>
     </div>
   </section>
-<!-- КОНЕЦ: форма заявки -->
 </main>
 <footer>
   <div class="container">
