@@ -1,5 +1,6 @@
 :root {
-  --bg: #0b3a53;
+  /*--bg: #0b3a53;*/
+  --bg: transparent;
   --card: #135b7a;
   --accent: #38bdf8;
   --text: #e6f6ff;
@@ -92,4 +93,12 @@ footer {
     text-align: left;
   }
 }
+
+#matrix-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -999;
+  pointer-events: none;
+}
+
 
