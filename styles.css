@@ -70,6 +70,10 @@ footer {
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 30px;
+  background: rgba(19,91,122,0.4);
+  border-radius: 18px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .hero-avatar {
